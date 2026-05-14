@@ -69,6 +69,32 @@ describe('TunnelStore', () => {
     expect(removedMock).toHaveBeenCalledTimes(1);
   });
 
+  it('emits added event with the correct entry payload', () => {
+    const addedMock = jest.fn();
+    store.on('added', addedMock);
+    const entry = makeEntry();
+    store.add(entry);
+    expect(addedMock).toHaveBeenCalledWith(entry);
+  });
+
+  it('emits updated event with the updated entry payload', () => {
+    const updatedMock = jest.fn();
+    store.on('updated', updatedMock);
+    store.add(makeEntry());
+    store.update('test-id', { status: 'online' });
+    expect(updatedMock).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'test-id', status: 'online' })
+    );
+  });
+
+  it('emits removed event with the removed entry id', () => {
+    const removedMock = jest.fn();
+    store.on('removed', removedMock);
+    store.add(makeEntry());
+    store.remove('test-id');
+    expect(removedMock).toHaveBeenCalledWith('test-id');
+  });
+
   it('clears all entries', () => {
     store.add(makeEntry({ id: 'x' }));
     store.add(makeEntry({ id: 'y' }));
