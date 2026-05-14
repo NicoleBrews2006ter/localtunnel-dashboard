@@ -1,0 +1,12 @@
+node_modules/
+build/
+.env
+.cache/
+.next/
+dist/
+out/
+*.log
+Desktop.ini
+.vscode/
+Thumbs.db
+npm-debug.log*
