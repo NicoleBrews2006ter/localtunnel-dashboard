@@ -44,6 +44,13 @@ export class TunnelLogger extends EventEmitter {
     return this.logs.get(tunnelId) ?? [];
   }
 
+  /**
+   * Returns only the log entries for a tunnel that match the given level.
+   */
+  getLogsForTunnelByLevel(tunnelId: string, level: LogLevel): LogEntry[] {
+    return this.getLogsForTunnel(tunnelId).filter((entry) => entry.level === level);
+  }
+
   clearLogsForTunnel(tunnelId: string): void {
     this.logs.delete(tunnelId);
   }
